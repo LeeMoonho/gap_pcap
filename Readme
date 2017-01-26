@@ -1,1 +1,2 @@
 gcc -o result_0 pcap_source.c -lpcap -I/usr/include/pcap
+sudo ./result_0
