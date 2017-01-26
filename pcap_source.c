@@ -16,7 +16,7 @@ void pack_view(unsigned char * user, const struct pcap_pkthdr* h, const unsigned
 {
   struct ether_header * et_hd;
   unsigned short eth_typ;
-  int len = 0;
+  int len = 0, i = 0;  
 
   et_hd = (struct ether_header *) p;
 
@@ -34,7 +34,24 @@ void pack_view(unsigned char * user, const struct pcap_pkthdr* h, const unsigned
     printf("TTL : %d\n",iph -> ip_ttl);
     printf("Src Add : %s\n",inet_ntoa(iph -> ip_src));
     printf("Dst Add : %s\n",inet_ntoa(iph -> ip_dst));
+    printf("Src Mac : ");
+    
+    while(i < 6){
+      printf("%02x ",et_hd -> ether_shost[i]);
+      i++;
+    }
+    
+    printf("\nDst Mac : ");
+
+    i = 0;
+    
+    while(i < 6){
+      printf("%02x ",et_hd -> ether_dhost[i]);
+      i++;
+    }
+
   }
+  printf("\n");
 
   if (iph->ip_p == IPPROTO_TCP)
   {
@@ -98,7 +115,7 @@ int main()
     perror(error);
     return 0;
   }
-  if (pcap_loop(pd,5,pack_view,0) < 0)
+  if (pcap_loop(pd,0,pack_view,0) < 0)
   {
     perror(error);
     return 0;
