@@ -1,0 +1,1 @@
+gcc -o 원하는파일명 소스파일.c -lpcap -I/usr/include/pcap
